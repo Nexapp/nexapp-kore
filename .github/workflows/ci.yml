@@ -58,4 +58,9 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Tests
-        run: make test
+        run: make test coverage
+
+      - uses: codecov/codecov-action@v1
+        with:
+          file: maven-reporting/target/site/jacoco-aggregate/jacoco.xml
+          flags: unittests

@@ -1,4 +1,5 @@
 ![CI](https://github.com/Nexapp/nexapp-kore/workflows/CI/badge.svg)
+[![codecov](https://codecov.io/gh/Nexapp/nexapp-kore/branch/master/graph/badge.svg)](https://codecov.io/gh/Nexapp/nexapp-kore)
 
 # Nexapp Kore
 Nexapp Librairies for Kotlin
