@@ -17,4 +17,3 @@ test:
 
 coverage:
 	mvn jacoco:report-aggregate
-	cat maven-reporting/target/site/jacoco-aggregate/index.html
