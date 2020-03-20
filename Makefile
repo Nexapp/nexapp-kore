@@ -1,10 +1,16 @@
-.PHONY: build lint test coverage
+.PHONY: help build lint test coverage
+
+help:
+	@echo "Nexapp Kore"
+	@echo "> test"
+	@echo "> lint"
+	@echo "> coverage	- Generates Jacoco coverage report"
 
 build:
 	mvn compile -DskipTests
 
 lint:
-	mvn antrun:run@detekt
+	mvn compile test-compile antrun:run@detekt
 
 test:
 	mvn compile test

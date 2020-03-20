@@ -12,6 +12,14 @@
     <artifactId>maven-reporting</artifactId>
     <packaging>pom</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>ca.nexapp</groupId>
+            <artifactId>nexapp-tracing</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
