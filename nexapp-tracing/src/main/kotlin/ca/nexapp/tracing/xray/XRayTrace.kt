@@ -2,13 +2,10 @@ package ca.nexapp.tracing.xray
 
 import ca.nexapp.tracing.Trace
 import com.amazonaws.xray.entities.Entity
-import org.apache.logging.log4j.kotlin.Logging
 
 data class XRayTrace(
-    val xrayEntity: Entity?
+    private val xrayEntity: Entity?
 ) : Trace {
-
-    companion object : Logging
 
     /**
      * Puts exception to XRay Trace
