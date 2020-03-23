@@ -31,3 +31,13 @@ val pingResult = tracer.trace("Ping") { trace ->
     ping(currentIp)
 }
 ```
+
+### nexapp-aws-lambda
+A Kotlin AWS Lambda library for automatic logging and error handling
+```kotlin
+class MyHandler : LambdaHandler<String, String>() {
+    override fun handleRequest(input: String, awsRuntimeContext: Context) {
+        return "Test: $input"
+    }
+}
+```

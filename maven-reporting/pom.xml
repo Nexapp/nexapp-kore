@@ -18,6 +18,11 @@
             <artifactId>nexapp-tracing</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <dependency>
+            <groupId>ca.nexapp</groupId>
+            <artifactId>nexapp-aws-lambda</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
