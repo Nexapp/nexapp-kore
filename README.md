@@ -1,8 +1,9 @@
 ![CI](https://github.com/Nexapp/nexapp-kore/workflows/CI/badge.svg)
-[![codecov](https://codecov.io/gh/Nexapp/nexapp-kore/branch/master/graph/badge.svg)](https://codecov.io/gh/Nexapp/nexapp-kore)
+![Codecov](https://img.shields.io/codecov/c/github/nexapp/nexapp-kore)
+![Maven Central](https://img.shields.io/maven-central/v/ca.nexapp/nexapp-kore)
 
 # Nexapp Kore
-Nexapp Librairies for Kotlin
+Nexapp Libraries for Kotlin
 
 ## Requirements
 * Java 8
