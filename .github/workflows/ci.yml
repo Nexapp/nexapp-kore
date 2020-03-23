@@ -71,5 +71,5 @@ jobs:
       - uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: maven-reporting/target/site/jacoco-aggregate/jacoco.xml
+          file: target/site/jacoco-aggregate/jacoco.xml
           flags: unittests
