@@ -10,10 +10,10 @@ build:
 	mvn compile -DskipTests
 
 deploy-staging:
-	GGP_TTY=$(tty) mvn clean deploy -DskipTests
+	GPG_TTY=$(tty) mvn clean deploy -DskipTests
 
 deploy-release:
-	GGP_TTY=$(tty) mvn clean deploy -P release -DskipTests
+	GPG_TTY=$(tty) mvn clean deploy -P release -DskipTests
 
 lint:
 	mvn compile test-compile antrun:run@detekt
