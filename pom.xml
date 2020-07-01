@@ -55,7 +55,7 @@
         <jackson.version>2.10.1</jackson.version>
         <aws.sdk.version>1.11.614</aws.sdk.version>
         <sentry.version>1.7.30</sentry.version>
-        <log4j.version>2.12.1</log4j.version>
+        <log4j.version>2.13.3</log4j.version>
         <slf4j.version>1.7.5</slf4j.version>
     </properties>
 
