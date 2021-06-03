@@ -1,9 +1,10 @@
 package ca.nexapp.lambdas.logging
 
 import ca.nexapp.lambdas.io.LambdaObjectMapper
+import ca.nexapp.logging.Logging
+import ca.nexapp.logging.log
 import com.amazonaws.services.lambda.runtime.Context
-import org.apache.logging.log4j.Level
-import org.apache.logging.log4j.kotlin.Logging
+import org.slf4j.event.Level
 
 /**
  * Log4J2 lambda lifecycle logger
@@ -18,12 +19,12 @@ class LambdaDefaultLogger(
     companion object : Logging
 
     override fun recordRequest(request: Any, awsRuntimeContext: Context) {
-        logger.log(level, "Request : $request")
+        logger.log(level, message = "Request : $request")
         logRuntimeContext(awsRuntimeContext)
     }
 
     override fun recordResponse(response: Any, awsRuntimeContext: Context) {
-        logger.log(level, "Response : $response")
+        logger.log(level, message = "Response : $response")
     }
 
     override fun recordHandlerError(error: Exception, awsRuntimeContext: Context) {
@@ -31,6 +32,6 @@ class LambdaDefaultLogger(
     }
 
     private fun logRuntimeContext(awsRuntimeContext: Context) {
-        logger.log(level, "Context : ${objectMapper.writeValueAsString(awsRuntimeContext)}")
+        logger.log(level, message = "Context : ${objectMapper.writeValueAsString(awsRuntimeContext)}")
     }
 }

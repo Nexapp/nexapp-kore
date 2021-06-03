@@ -1,4 +1,4 @@
-.PHONY: help build deploy-staging deploy-release lint test coverage
+.PHONY: help build deploy-staging deploy-release lint lint/check lint/format test coverage
 
 help:
 	@echo "Nexapp Kore"
@@ -10,16 +10,19 @@ build:
 	mvn compile -DskipTests
 
 deploy-staging:
-	GPG_TTY=$(tty) mvn clean deploy -DskipTests
+	GPG_TTY=$(tty) mvn -DperformRelease=true clean deploy -DskipTests
 
 deploy-release:
-	GPG_TTY=$(tty) mvn clean deploy -P release -DskipTests
+	GPG_TTY=$(tty) mvn -DperformRelease=true clean deploy -P release -DskipTests
 
-lint:
-	mvn compile test-compile antrun:run@detekt
+lint: lint/format
+lint/check:
+	mvn install ktlint:check -DskipTests
+lint/format:
+	mvn install ktlint:format -DskipTests
 
 test:
-	mvn compile test
+	mvn install test
 
 coverage:
 	mvn jacoco:report-aggregate

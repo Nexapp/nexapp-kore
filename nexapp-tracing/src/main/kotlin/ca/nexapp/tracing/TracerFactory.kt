@@ -1,15 +1,16 @@
 package ca.nexapp.tracing
 
-import com.amazonaws.xray.AWSXRay
-import ca.nexapp.tracing.log4j.Log4JTracer
 import ca.nexapp.tracing.sentry.SentryTracer
+import ca.nexapp.tracing.sfl4j.Slf4JTracer
 import ca.nexapp.tracing.xray.XRayTracer
+import com.amazonaws.xray.AWSXRay
 import io.sentry.Sentry
 import java.time.Clock
 
 data class Settings(
     val enableXRay: Boolean,
-    val enableSentry: Boolean
+    val enableSentry: Boolean,
+    val enableLogging: Boolean
 )
 
 class TracerFactory(private val clock: Clock) {
@@ -25,8 +26,8 @@ class TracerFactory(private val clock: Clock) {
             tracers += createSentryTracer()
         }
 
-        if (tracers.isEmpty()) {
-            tracers += Log4JTracer()
+        if (settings.enableLogging) {
+            tracers += Slf4JTracer()
         }
 
         return MultipleTracers(tracers)

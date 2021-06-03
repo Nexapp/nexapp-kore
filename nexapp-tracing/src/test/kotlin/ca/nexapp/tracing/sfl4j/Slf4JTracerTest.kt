@@ -1,16 +1,16 @@
-package ca.nexapp.tracing.log4j
+package ca.nexapp.tracing.sfl4j
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import org.junit.jupiter.api.Test
 
-internal class Log4JTracerTest {
+internal class Slf4JTracerTest {
 
     companion object {
         private const val TRACE_NAME = "Bob"
     }
 
-    private val tracer = Log4JTracer()
+    private val tracer = Slf4JTracer()
 
     @Test
     fun `should execute in trace`() {

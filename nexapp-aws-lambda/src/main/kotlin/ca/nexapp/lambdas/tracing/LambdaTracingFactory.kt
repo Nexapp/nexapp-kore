@@ -14,7 +14,8 @@ class LambdaTracingFactory(
     fun createTracer(): Tracer {
         val tracerSettings = Settings(
             enableXRay = isXRayTracingEnabled(),
-            enableSentry = true
+            enableSentry = true,
+            enableLogging = true
         )
 
         return tracerFactory.create(tracerSettings)

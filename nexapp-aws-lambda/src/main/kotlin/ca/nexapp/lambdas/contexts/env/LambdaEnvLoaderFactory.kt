@@ -1,8 +1,8 @@
 package ca.nexapp.lambdas.contexts.env
 
+import ca.nexapp.logging.Logging
 import com.amazonaws.services.simplesystemsmanagement.AWSSimpleSystemsManagement
 import com.amazonaws.services.simplesystemsmanagement.AWSSimpleSystemsManagementClientBuilder
-import org.apache.logging.log4j.kotlin.Logging
 
 /**
  * Creates the default EnvLoader which fallbacks to SSM if not found in local environment variables

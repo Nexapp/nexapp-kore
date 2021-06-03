@@ -9,8 +9,8 @@ return tracer.trace("Trace Name") { trace ->
 ```
 **Note** that for now traces are NOT thread-friendly and should be only consumed once
 
-### Log4JTracer
-Traces will be logged to Log4J if sentry or xray are disabled
+### Slf4JTracer
+Traces will be logged to Slf4J by default
 
 ### SentryTracer
 Traces will show up as breadcrumbs in sentry if `SENTRY_DSN` is in your env-loader

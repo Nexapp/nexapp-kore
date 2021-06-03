@@ -1,9 +1,9 @@
 package ca.nexapp.tracing.xray
 
+import ca.nexapp.logging.Logging
 import com.amazonaws.xray.exceptions.AlreadyEmittedException
 import com.amazonaws.xray.exceptions.SegmentNotFoundException
 import com.amazonaws.xray.exceptions.SubsegmentNotFoundException
-import org.apache.logging.log4j.kotlin.Logging
 import java.io.IOException
 
 object XRay : Logging {
@@ -21,7 +21,7 @@ object XRay : Logging {
         val shouldNotThrow = exceptions.any { it.isInstance(exception) }
 
         if (shouldNotThrow) {
-            logger.warn(exception)
+            logger.warn(exception.message, exception)
             return
         }
 
