@@ -5,7 +5,7 @@ import io.sentry.context.Context
 import io.sentry.event.Breadcrumb
 import io.sentry.event.BreadcrumbBuilder
 import java.time.Instant
-import java.util.*
+import java.util.Date
 
 data class SentryTrace(
     private val context: Context,

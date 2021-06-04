@@ -25,19 +25,17 @@ internal class LambdaTracingFactoryTest {
     }
 
     @Test
-    fun `given no xray configuration, should create tracer only with sentry`() {
-        val envLoader = TestEnvLoader(emptyMap())
-        every { tracerFactory.create(Settings(enableXRay = false, enableSentry = true)) } returns expectedTracer
-
-        val tracer = LambdaTracingFactory(envLoader, tracerFactory).createTracer()
-
-        assertThat(tracer).isEqualTo(expectedTracer)
-    }
-
-    @Test
-    fun `given xray disabled, should create tracer only with sentry`() {
+    fun `given xray disabled, should create tracer without xray`() {
         val envLoader = TestEnvLoader(mapOf("XRAY_TRACING_ENABLED" to "false"))
-        every { tracerFactory.create(Settings(enableXRay = false, enableSentry = true)) } returns expectedTracer
+        every {
+            tracerFactory.create(
+                Settings(
+                    enableXRay = false,
+                    enableSentry = true,
+                    enableLogging = true
+                )
+            )
+        } returns expectedTracer
 
         val tracer = LambdaTracingFactory(envLoader, tracerFactory).createTracer()
 
@@ -45,9 +43,17 @@ internal class LambdaTracingFactoryTest {
     }
 
     @Test
-    fun `given xray enabled, should create tracer only both xray and sentry`() {
+    fun `given xray enabled, should create tracer with xray`() {
         val envLoader = TestEnvLoader(mapOf("XRAY_TRACING_ENABLED" to "true"))
-        every { tracerFactory.create(Settings(enableXRay = true, enableSentry = true)) } returns expectedTracer
+        every {
+            tracerFactory.create(
+                Settings(
+                    enableXRay = true,
+                    enableSentry = true,
+                    enableLogging = true
+                )
+            )
+        } returns expectedTracer
 
         val tracer = LambdaTracingFactory(envLoader, tracerFactory).createTracer()
 

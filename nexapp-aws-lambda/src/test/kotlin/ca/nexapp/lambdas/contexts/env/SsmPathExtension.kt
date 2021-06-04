@@ -7,7 +7,7 @@ import com.amazonaws.services.simplesystemsmanagement.model.ParameterType
 import com.amazonaws.services.simplesystemsmanagement.model.PutParameterRequest
 import org.junit.jupiter.api.extension.AfterAllCallback
 import org.junit.jupiter.api.extension.ExtensionContext
-import java.util.*
+import java.util.UUID
 
 class SsmPathExtension : AfterAllCallback {
 

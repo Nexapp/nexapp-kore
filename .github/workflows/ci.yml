@@ -39,7 +39,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
       - name: Lint
-        run: make lint
+        run: make lint/check
 
   test:
     runs-on: ubuntu-latest

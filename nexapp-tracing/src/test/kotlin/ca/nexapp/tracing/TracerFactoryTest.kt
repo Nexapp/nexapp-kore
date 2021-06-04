@@ -3,8 +3,8 @@ package ca.nexapp.tracing
 import assertk.assertThat
 import assertk.assertions.hasSize
 import assertk.assertions.isInstanceOf
-import ca.nexapp.tracing.log4j.Log4JTracer
 import ca.nexapp.tracing.sentry.SentryTracer
+import ca.nexapp.tracing.sfl4j.Slf4JTracer
 import ca.nexapp.tracing.xray.XRayTracer
 import org.junit.jupiter.api.Test
 import java.time.Clock
@@ -22,19 +22,19 @@ internal class TracerFactoryTest {
     private val tracerFactory = TracerFactory(CLOCK)
 
     @Test
-    fun `given no xray nor sentry enabled, should only have log4j tracer`() {
-        val settings = Settings(enableSentry = false, enableXRay = false)
+    fun `given logging enabled, should log to sfl4j logger`() {
+        val settings = Settings(enableSentry = false, enableXRay = false, enableLogging = true)
 
         val tracer = tracerFactory.create(settings) as MultipleTracers
 
         val tracers = tracer.tracers
         assertThat(tracers).hasSize(1)
-        assertThat(tracers[0]).isInstanceOf(Log4JTracer::class)
+        assertThat(tracers[0]).isInstanceOf(Slf4JTracer::class)
     }
 
     @Test
     fun `given xray enabled, should have xray tracer`() {
-        val settings = Settings(enableSentry = false, enableXRay = true)
+        val settings = Settings(enableSentry = false, enableXRay = true, enableLogging = false)
 
         val tracer = tracerFactory.create(settings) as MultipleTracers
 
@@ -45,7 +45,7 @@ internal class TracerFactoryTest {
 
     @Test
     fun `given sentry enabled, should have sentry tracer`() {
-        val settings = Settings(enableSentry = true, enableXRay = false)
+        val settings = Settings(enableSentry = true, enableXRay = false, enableLogging = false)
 
         val tracer = tracerFactory.create(settings) as MultipleTracers
 
@@ -56,7 +56,7 @@ internal class TracerFactoryTest {
 
     @Test
     fun `given xray and sentry enabled, should have both tracers`() {
-        val settings = Settings(enableSentry = true, enableXRay = true)
+        val settings = Settings(enableSentry = true, enableXRay = true, enableLogging = false)
 
         val tracer = tracerFactory.create(settings) as MultipleTracers
 

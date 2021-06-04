@@ -1,8 +1,8 @@
 package ca.nexapp.lambdas
 
+import ca.nexapp.lambdas.contexts.LambdaContext
 import com.amazonaws.services.lambda.runtime.Context
 import com.amazonaws.services.lambda.runtime.RequestHandler
-import ca.nexapp.lambdas.contexts.LambdaContext
 
 abstract class LambdaHandler<I, O>(
     private val lambdaContext: LambdaContext

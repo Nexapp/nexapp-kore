@@ -5,7 +5,7 @@
     <parent>
         <artifactId>nexapp-kore</artifactId>
         <groupId>ca.nexapp</groupId>
-        <version>0.0.1-R2</version>
+        <version>0.0.1-R3</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -29,6 +29,12 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>ca.nexapp</groupId>
+            <artifactId>nexapp-kore-commons</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
         <!-- AWS XRay -->
         <dependency>
             <groupId>com.amazonaws</groupId>
@@ -48,25 +54,6 @@
             <groupId>io.sentry</groupId>
             <artifactId>sentry</artifactId>
             <version>${sentry.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.sentry</groupId>
-            <artifactId>sentry-log4j2</artifactId>
-            <version>${sentry.version}</version>
-        </dependency>
-
-        <!-- Tests -->
-        <dependency>
-            <groupId>com.willowtreeapps.assertk</groupId>
-            <artifactId>assertk-jvm</artifactId>
-            <version>0.19</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.mockk</groupId>
-            <artifactId>mockk</artifactId>
-            <version>1.9.3</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 

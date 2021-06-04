@@ -1,6 +1,6 @@
 package ca.nexapp.lambdas.contexts.env
 
-import org.apache.logging.log4j.kotlin.Logging
+import ca.nexapp.logging.Logging
 
 class CouldNotLoadEnvException(env: String, error: Throwable?) :
     IllegalArgumentException("Could not load parameter $env", error) {
@@ -35,7 +35,7 @@ interface LambdaEnvLoader {
             load(env)
         } catch (error: CouldNotLoadEnvException) {
             logger.info("Could not load $env from env loader(s), fallback to null")
-            logger.debug(error)
+            logger.debug(error.message, error)
 
             null
         }
