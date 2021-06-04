@@ -6,7 +6,7 @@
 
     <groupId>ca.nexapp</groupId>
     <artifactId>nexapp-kore</artifactId>
-    <version>0.0.1-R3</version>
+    <version>1.0.0</version>
     <packaging>pom</packaging>
 
     <name>Nexapp Kore</name>
