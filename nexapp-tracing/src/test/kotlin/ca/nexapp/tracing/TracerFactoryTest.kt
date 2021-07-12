@@ -4,7 +4,7 @@ import assertk.assertThat
 import assertk.assertions.hasSize
 import assertk.assertions.isInstanceOf
 import ca.nexapp.tracing.sentry.SentryTracer
-import ca.nexapp.tracing.sfl4j.Slf4JTracer
+import ca.nexapp.tracing.slf4j.Slf4JTracer
 import ca.nexapp.tracing.xray.XRayTracer
 import org.junit.jupiter.api.Test
 import java.time.Clock

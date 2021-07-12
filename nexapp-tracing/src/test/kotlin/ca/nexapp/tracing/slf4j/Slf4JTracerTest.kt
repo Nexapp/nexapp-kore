@@ -1,4 +1,4 @@
-package ca.nexapp.tracing.sfl4j
+package ca.nexapp.tracing.slf4j
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
