@@ -1,7 +1,7 @@
 package ca.nexapp.tracing
 
 import ca.nexapp.tracing.sentry.SentryTracer
-import ca.nexapp.tracing.sfl4j.Slf4JTracer
+import ca.nexapp.tracing.slf4j.Slf4JTracer
 import ca.nexapp.tracing.xray.XRayTracer
 import com.amazonaws.xray.AWSXRay
 import io.sentry.Sentry
