@@ -1,58 +1,51 @@
 package ca.nexapp.tracing.sentry
 
 import ca.nexapp.tracing.Trace
-import io.sentry.context.Context
-import io.sentry.event.Breadcrumb
-import io.sentry.event.BreadcrumbBuilder
+import io.sentry.Breadcrumb
+import io.sentry.IHub
+import io.sentry.SentryLevel
 import java.time.Instant
 import java.util.Date
 
 data class SentryTrace(
-    private val context: Context,
-    private val message: String,
+    private val hub: IHub,
+    private val title: String,
     private val startOfTrace: Instant
 ) : Trace {
 
-    private var level = Breadcrumb.Level.INFO
-
-    private val tags = mutableMapOf<String, String>()
-    private val metadata = mutableMapOf<String, String>()
-
-    /**
-     * Changes the breadcrumb Level to ERROR
-     * Puts a field "error" with exception in breadcrumb data
-     */
-    override fun signalError(error: Exception) {
-        this.level = Breadcrumb.Level.ERROR
-        setTag("error", error.toString())
+    private val breadcrumb = Breadcrumb(Date.from(startOfTrace)).apply {
+        this.message = title
+        this.level = SentryLevel.INFO
+        this.category = "trace"
     }
 
     /**
      * Puts the field in breadcrumb data
      */
     override fun setTag(name: String, value: String) {
-        tags[name] = value
+        breadcrumb.setData(name, value)
     }
 
     /**
      * Puts the field in breadcrumb data
      */
     override fun setMetadata(key: String, value: String) {
-        metadata[key] = value
+        breadcrumb.setData(key, value)
     }
 
     /**
      * Creates and records the breadcrumb
      */
     override fun close() {
-        val breadcrumb = BreadcrumbBuilder()
-            .setMessage(message)
-            .setLevel(level)
-            .setTimestamp(Date.from(startOfTrace))
-            .setCategory("trace")
-            .setData(tags + metadata)
-            .build()
+        hub.addBreadcrumb(breadcrumb)
+    }
 
-        context.recordBreadcrumb(breadcrumb)
+    /**
+     * Changes the breadcrumb Level to ERROR
+     * Puts a field "error" with exception in breadcrumb data
+     */
+    override fun signalError(error: Exception) {
+        breadcrumb.level = SentryLevel.ERROR
+        setTag("error", error.toString())
     }
 }

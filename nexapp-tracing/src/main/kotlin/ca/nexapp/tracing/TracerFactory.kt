@@ -4,7 +4,6 @@ import ca.nexapp.tracing.sentry.SentryTracer
 import ca.nexapp.tracing.slf4j.Slf4JTracer
 import ca.nexapp.tracing.xray.XRayTracer
 import com.amazonaws.xray.AWSXRay
-import io.sentry.Sentry
 import java.time.Clock
 
 data class Settings(
@@ -14,7 +13,6 @@ data class Settings(
 )
 
 class TracerFactory(private val clock: Clock) {
-
     fun create(settings: Settings): Tracer {
         val tracers = mutableListOf<Tracer>()
 
@@ -39,7 +37,6 @@ class TracerFactory(private val clock: Clock) {
     }
 
     private fun createSentryTracer(): SentryTracer {
-        val client = Sentry.getStoredClient()
-        return SentryTracer(clock, client)
+        return SentryTracer(clock)
     }
 }

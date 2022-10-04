@@ -2,10 +2,7 @@ package ca.nexapp.tracing.sentry
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import io.mockk.every
-import io.mockk.mockk
-import io.sentry.SentryClient
-import io.sentry.context.Context
+import io.sentry.Sentry
 import org.junit.jupiter.api.Test
 import java.time.Clock
 import java.time.Instant
@@ -18,19 +15,17 @@ internal class SentryTracerTest {
         private val CLOCK = Clock.fixed(NOW, ZoneOffset.UTC)
     }
 
-    private val context = mockk<Context>()
-    private val client = mockk<SentryClient> {
-        val testScope = this@SentryTracerTest
-        every { context } returns testScope.context
-    }
-
     @Test
     fun `should create sentry trace`() {
-        val tracer = SentryTracer(CLOCK, client)
+        val tracer = SentryTracer(CLOCK)
 
         val trace = tracer.openTrace("Bob")
 
-        val expected = SentryTrace(context = context, message = "Bob", startOfTrace = NOW)
+        val expected = SentryTrace(
+            hub = Sentry.getCurrentHub(),
+            title = "Bob",
+            startOfTrace = NOW
+        )
         assertThat(trace).isEqualTo(expected)
     }
 }
