@@ -1,10 +1,10 @@
 package ca.nexapp.lambdas.logging
 
 import com.amazonaws.services.lambda.runtime.Context
+import io.sentry.Breadcrumb
 import io.sentry.Sentry
-import io.sentry.SentryClient
-import io.sentry.event.Breadcrumb
-import io.sentry.event.BreadcrumbBuilder
+import io.sentry.SentryLevel
+import io.sentry.SentryOptions
 
 /**
  * Sentry logger for the lambda lifecycle
@@ -12,64 +12,62 @@ import io.sentry.event.BreadcrumbBuilder
  * Records breadcrumbs and extras akin to the Python integration
  * Limitations : relies on the Log4J2 integration to actually send errors/warnings to Sentry
  */
-class LambdaSentryLogger(
-    sentryClient: SentryClient
-) : LambdaLogger {
+class LambdaSentryLogger : LambdaLogger {
 
     companion object {
 
         fun configureDefault(dsn: String, env: String): LambdaSentryLogger {
-            val sentry = Sentry.init(dsn)
-            sentry.environment = env
+            Sentry.init(dsn)
 
-            return LambdaSentryLogger(sentry)
+            Sentry.OptionsConfiguration<SentryOptions> { options ->
+                options.environment = env
+            }
+
+            return LambdaSentryLogger()
         }
     }
 
-    private val sentryContext = sentryClient.context
-
     override fun recordHandlerError(error: Exception, awsRuntimeContext: Context) {
-        val breadcrumb = BreadcrumbBuilder()
-            .setCategory("error")
-            .setLevel(Breadcrumb.Level.ERROR)
-            .setMessage(error.message)
-            .let { builder -> buildBreadcrumb(builder, awsRuntimeContext) }
+        val breadcrumb = Breadcrumb().apply {
+            this.category = "error"
+            this.level = SentryLevel.ERROR
+            this.message = error.message
+        }.addAwsContextMetadata(awsRuntimeContext)
 
-        sentryContext.recordBreadcrumb(breadcrumb)
-        sentryContext.addExtra("error", error)
+        Sentry.addBreadcrumb(breadcrumb)
+        Sentry.setExtra("error", error.message ?: "")
     }
 
     override fun recordResponse(response: Any, awsRuntimeContext: Context) {
-        val breadcrumb = BreadcrumbBuilder()
-            .setCategory("response")
-            .setLevel(Breadcrumb.Level.INFO)
-            .withData("content", response.toString())
-            .let { builder -> buildBreadcrumb(builder, awsRuntimeContext) }
+        val breadcrumb = Breadcrumb().apply {
+            this.category = "response"
+            this.level = SentryLevel.INFO
+            setData("content", response.toString())
+        }.addAwsContextMetadata(awsRuntimeContext)
 
-        sentryContext.recordBreadcrumb(breadcrumb)
-        sentryContext.addExtra("response", response)
+        Sentry.addBreadcrumb(breadcrumb)
+        Sentry.setExtra("response", response.toString())
     }
 
     override fun recordRequest(request: Any, awsRuntimeContext: Context) {
-        val breadcrumb = BreadcrumbBuilder()
-            .setCategory("request")
-            .setLevel(Breadcrumb.Level.INFO)
-            .withData("content", request.toString())
-            .let { builder -> buildBreadcrumb(builder, awsRuntimeContext) }
+        val breadcrumb = Breadcrumb().apply {
+            this.category = "request"
+            this.level = SentryLevel.INFO
+            setData("content", request.toString())
+        }.addAwsContextMetadata(awsRuntimeContext)
 
-        sentryContext.addExtra("request_id", awsRuntimeContext.awsRequestId)
-        sentryContext.addExtra("function_name", awsRuntimeContext.functionName)
-        sentryContext.addExtra("function_version", awsRuntimeContext.functionVersion)
-        sentryContext.addExtra("memory_limit", awsRuntimeContext.memoryLimitInMB)
-        sentryContext.addExtra("maximum_execution_time", awsRuntimeContext.remainingTimeInMillis)
+        Sentry.setExtra("request_id", awsRuntimeContext.awsRequestId)
+        Sentry.setExtra("function_name", awsRuntimeContext.functionName)
+        Sentry.setExtra("function_version", awsRuntimeContext.functionVersion)
+        Sentry.setExtra("memory_limit", awsRuntimeContext.memoryLimitInMB.toString())
+        Sentry.setExtra("maximum_execution_time", awsRuntimeContext.remainingTimeInMillis.toString())
 
-        sentryContext.recordBreadcrumb(breadcrumb)
-        sentryContext.addExtra("request", request)
+        Sentry.addBreadcrumb(breadcrumb)
+        Sentry.setExtra("request", request.toString())
     }
 
-    private fun buildBreadcrumb(builder: BreadcrumbBuilder, awsRuntimeContext: Context): Breadcrumb {
-        builder.withData("request_id", awsRuntimeContext.awsRequestId)
-        builder.withData("time_remaining", "${awsRuntimeContext.remainingTimeInMillis}ms")
-        return builder.build()
+    private fun Breadcrumb.addAwsContextMetadata(awsRuntimeContext: Context) = apply {
+        setData("request_id", awsRuntimeContext.awsRequestId)
+        setData("time_remaining", "${awsRuntimeContext.remainingTimeInMillis}ms")
     }
 }

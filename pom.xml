@@ -49,15 +49,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.release.version>2.5.3</maven.release.version>
 
-        <kotlin.version>1.5.31</kotlin.version>
+        <kotlin.version>1.7.0</kotlin.version>
         <kotlin.code.style>official</kotlin.code.style>
-        <junit.version>5.7.2</junit.version>
+        <junit.version>5.9.1</junit.version>
 
-        <jackson.version>2.12.5</jackson.version>
-        <aws.sdk.version>1.12.128</aws.sdk.version>
-        <sentry.version>1.7.30</sentry.version>
-        <slf4j.version>1.7.32</slf4j.version>
-        <log4j2.version>2.15.0</log4j2.version>
+        <jackson.version>2.13.4</jackson.version>
+        <aws.sdk.version>1.12.315</aws.sdk.version>
+        <sentry.version>6.4.2</sentry.version>
+        <slf4j.version>2.0.3</slf4j.version>
+        <log4j2.version>2.19.0</log4j2.version>
     </properties>
 
     <dependencyManagement>
@@ -285,7 +285,7 @@
                     <plugin>
                         <groupId>org.jetbrains.dokka</groupId>
                         <artifactId>dokka-maven-plugin</artifactId>
-                        <version>${kotlin.version}</version>
+                        <version>1.5.31</version>
                         <executions>
                             <execution>
                                 <phase>prepare-package</phase>
