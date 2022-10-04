@@ -1,5 +1,7 @@
 .PHONY: help build deploy-staging deploy-release lint lint/check lint/format test coverage
 
+TTY=$(shell tty)
+
 help:
 	@echo "Nexapp Kore"
 	@echo "> test"
@@ -10,10 +12,10 @@ build:
 	mvn compile -DskipTests
 
 deploy-staging:
-	GPG_TTY=$(tty) mvn -DperformRelease=true clean deploy -DskipTests
+	GPG_TTY=$(TTY) mvn -DperformRelease=true clean deploy -DskipTests
 
 deploy-release:
-	GPG_TTY=$(tty) mvn -DperformRelease=true clean deploy -P release-sign-artifacts -DskipTests
+	GPG_TTY=$(TTY) mvn -DperformRelease=true clean deploy -P release-sign-artifacts -DskipTests
 
 lint: lint/format
 lint/check:
