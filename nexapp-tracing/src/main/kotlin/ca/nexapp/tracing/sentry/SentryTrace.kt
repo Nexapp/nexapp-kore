@@ -9,12 +9,12 @@ import java.util.Date
 
 data class SentryTrace(
     private val hub: IHub,
-    private val title: String,
+    private val message: String,
     private val startOfTrace: Instant
 ) : Trace {
 
     private val breadcrumb = Breadcrumb(Date.from(startOfTrace)).apply {
-        this.message = title
+        this.message = this@SentryTrace.message
         this.level = SentryLevel.INFO
         this.category = "trace"
     }

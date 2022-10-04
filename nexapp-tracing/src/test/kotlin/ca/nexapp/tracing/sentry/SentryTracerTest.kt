@@ -23,7 +23,7 @@ internal class SentryTracerTest {
 
         val expected = SentryTrace(
             hub = Sentry.getCurrentHub(),
-            title = "Bob",
+            message = "Bob",
             startOfTrace = NOW
         )
         assertThat(trace).isEqualTo(expected)

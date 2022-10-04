@@ -14,7 +14,7 @@ class SentryTracer(
 
         return SentryTrace(
             hub = Sentry.getCurrentHub(),
-            title = name,
+            message = name,
             startOfTrace = now
         )
     }
