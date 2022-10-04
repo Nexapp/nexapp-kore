@@ -1,7 +1,10 @@
 package ca.nexapp.lambdas.logging
 
 import com.amazonaws.services.lambda.runtime.Context
-import io.sentry.*
+import io.sentry.Breadcrumb
+import io.sentry.Sentry
+import io.sentry.SentryLevel
+import io.sentry.SentryOptions
 
 /**
  * Sentry logger for the lambda lifecycle
