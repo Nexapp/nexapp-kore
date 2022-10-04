@@ -13,7 +13,7 @@ deploy-staging:
 	GPG_TTY=$(tty) mvn -DperformRelease=true clean deploy -DskipTests
 
 deploy-release:
-	GPG_TTY=$(tty) mvn -DperformRelease=true clean deploy -P release -DskipTests
+	GPG_TTY=$(tty) mvn -DperformRelease=true clean deploy -P release-sign-artifacts -DskipTests
 
 lint: lint/format
 lint/check:
