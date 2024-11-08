@@ -6,7 +6,7 @@
 Nexapp Libraries for Kotlin
 
 ## Requirements
-* Java 8
+* Java 11
 * Maven 3.5+
 * GNU Make
 
